@@ -194,12 +194,17 @@ button {
 </style>
 <script>
   var queryURL = 'https://search.brave.com/search?q=';
+  var urdad = "";
   document.querySelector('.searchInput').addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 let query = event.target.value;
                 if (query) {
-                    window.location.href = queryURL + encodeURIComponent(query);
+                    window.location.href = queryURL + encodeURIComponent(query) + urdad;
                 }
             }
+        });
+
+  document.querySelector('#fuck').addEventListener('click', function() {
+    urdad = '&source=llmSuggest&summary=1';
         });
 </script>
