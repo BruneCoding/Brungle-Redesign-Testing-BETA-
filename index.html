@@ -97,6 +97,17 @@
   width: 80%;
 }
 
+  .searchInput:focus {
+    outline: none;
+    border: none;
+  }
+
+  .searchInput:focus ~ .searchBar {
+    box-shadow: 0 0 50px rgba(255,255,255,0.5);
+  background: #484a54;
+  border: 1px solid rgba(255,255,255,0.25);
+    transform: scale(1.005);
+  } 
 .searchInput::placeholder {
   color: #eaeaea;
 }
