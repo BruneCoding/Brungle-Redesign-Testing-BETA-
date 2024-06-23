@@ -196,7 +196,7 @@ button {
   var queryURL = 'https://search.brave.com/search?q=';
   var urdad = "";
   document.querySelector('.searchInput').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
+        if (event.key === 'Enter') {
                 let query = event.target.value;
                 if (query) {
                     window.location.href = queryURL + encodeURIComponent(query) + urdad;
@@ -206,5 +206,11 @@ button {
 
   document.querySelector('#fuck').addEventListener('click', function() {
     urdad = '&source=llmSuggest&summary=1';
+    console.log('clicked ai');
+    var lol = document.querySelector('#fuck');
+
+    lol.style.transition = "all 0.15s ease-in-out";
+    lol.style.marginTop = "-15px";
+    lol.style.marginTop = "0px";
         });
 </script>
