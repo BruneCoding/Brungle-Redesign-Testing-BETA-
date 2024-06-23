@@ -193,6 +193,9 @@ button {
 
 </style>
 <script>
+  window.addEventListener('load', function() {
+            document.querySelector('.searchInput').focus();
+        });
   var queryURL = 'https://search.brave.com/search?q=';
   var urdad = "";
   document.querySelector('.searchInput').addEventListener('keypress', function(event) {
