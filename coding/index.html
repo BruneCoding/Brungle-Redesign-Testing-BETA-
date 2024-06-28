@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCODER</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            height: 100vh;
+        }
+
+        #editor-container {
+            flex: 1;
+            margin-top: 40px;
+            position: relative;
+        }
+
+        #editor {
+            width: 100%;
+            height: 100%;
+            background-color: #f4f4f4;
+            border-right: 1px solid #ccc;
+            box-sizing: border-box;
+            overflow: auto;
+            white-space: pre-wrap;
+            padding: 10px;
+            outline: none;
+            font-family: monospace;
+        }
+
+        #output {
+            flex: 1;
+            margin-top: 50px;
+            background-color: #fff;
+            padding: 10px;
+            overflow-y: auto;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        #run-btn,
+        #save-btn {
+            position: absolute;
+            top: 10px;
+            padding: 10px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            z-index: 1;
+        }
+
+        #run-btn {
+            right: 80px;
+        }
+
+        #save-btn {
+            right: 10px;
+        }
+
+        #suggestions {
+            position: absolute;
+            top: 40px;
+            left: 10px;
+            z-index: 1;
+            background-color: #fff;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            max-height: 150px;
+            overflow-y: auto;
+            opacity: 1;
+            transition: all 5s ease-in-out;
+        }
+
+        #suggestions:hover {
+            display: block;
+            opacity: 1 !important;
+        }
+
+        #suggestions ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 5px 10px;
+        }
+
+        #suggestions ul li {
+            cursor: pointer;
+        }
+
+        .highlighted-line {
+            background-color: #ffc107 !important;
+        }
+
+        /* New styles */
+        .top-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .top-bar a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        .brungle-coding {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .brungle-devs {
+            font-size: 0.8em;
+            color: #999;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top bar -->
+    <div class="top-bar">
+        <div>
+            <span>Brungle Coding</span>
+        </div>
+        <div class="brungle-coding">Editing in &lt;HTML&gt;</div>
+        <div class="brungle-devs">Brungle Devs</div>
+    </div>
+
+    <div id="editor-container">
+        <textarea id="editor" placeholder="Start your HTML, CSS, JS coding ..."></textarea>
+        <button id="run-btn">Run</button>
+        <button id="save-btn">Save</button>
+        <div id="suggestions"></div>
+    </div>
+    <div id="output"></div>
+
+    <script>
+        const editor = document.getElementById('editor');
+        const output = document.getElementById('output');
+        const runBtn = document.getElementById('run-btn');
+        const saveBtn = document.getElementById('save-btn');
+        const suggestions = document.getElementById('suggestions');
+        const htmlTags = [
+            'a', 'abbr', 'acronym', 'address', 'applet', 'area', 'article', 'aside', 'audio',
+            'b', 'base', 'basefont', 'bdi', 'bdo', 'bgsound', 'big', 'blink', 'blockquote', 'body', 'br', 'button',
+            'canvas', 'caption', 'center', 'cite', 'code', 'col', 'colgroup', 'command',
+            'datalist', 'dd', 'del', 'details', 'dfn', 'dialog', 'dir', 'div', 'dl', 'dt',
+            'em', 'embed',
+            'fieldset', 'figcaption', 'figure', 'font', 'footer', 'form', 'frame', 'frameset',
+            'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html',
+            'i', 'iframe', 'image', 'img', 'input', 'ins', 'isindex',
+            'kbd', 'keygen',
+            'label', 'legend', 'li', 'link', 'listing',
+            'main', 'map', 'mark', 'marquee', 'menu', 'menuitem', 'meta', 'meter', 'multicol',
+            'nav', 'nextid', 'nobr', 'noembed', 'noframes', 'noscript',
+            'object', 'ol', 'optgroup', 'option', 'output',
+            'p', 'param', 'plaintext', 'pre', 'progress',
+            'q',
+            'rp', 'rt', 'ruby',
+            's', 'samp', 'script', 'section', 'select', 'small', 'source', 'spacer', 'span', 'strike', 'strong',
+            'style', 'sub', 'summary', 'sup',
+            'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'track', 'tt',
+            'u', 'ul',
+            'var', 'video', 'wbr', 'xmp'
+        ];
+        let saveSlots = [];
+        editor.addEventListener('input', handleInput);
+        editor.addEventListener('keydown', handleKeyDown);
+        runBtn.addEventListener('click', runCode);
+        saveBtn.addEventListener('click', saveCode);
+        suggestions.addEventListener('click', handleSuggestionClick);
+        document.addEventListener('click', hideSuggestions);
+
+        function handleInput() {
+            highlightActiveLine();
+            showSuggestions();
+            autoCloseTags();
+        }
+
+        function handleKeyDown(event) {
+            if (event.key === 'Tab') {
+                event.preventDefault();
+                const cursorPosition = editor.selectionStart;
+                const startOfLine = editor.value.lastIndexOf('\n', cursorPosition - 1) + 1;
+                const lineText = editor.value.substring(startOfLine, cursorPosition);
+                if (lineText.trim().startsWith('<')) {
+                    const tagName = lineText.trim().split(' ')[0];
+                    const suggestedTag = htmlTags.find(tag => tag.startsWith(tagName));
+                    if (suggestedTag) {
+                        const remaining = suggestedTag.slice(tagName.length);
+                        const newText = remaining + lineText.trim().slice(tagName.length);
+                        const beforeCursor = editor.value.slice(0, startOfLine);
+                        const afterCursor = editor.value.slice(cursorPosition);
+                        editor.value = beforeCursor + newText + afterCursor;
+                        editor.selectionStart = editor.selectionEnd = cursorPosition + remaining.length;
+                    }
+                }
+            }
+        }
+
+        function highlightActiveLine() {
+            const lines = editor.value.split('\n');
+            const selectionStart = editor.selectionStart;
+            let lineNumber = 0;
+            let charCount = 0;
+            for (let i = 0; i < lines.length; i++) {
+                charCount += lines[i].length + 1;
+                if (charCount >= selectionStart) {
+                    lineNumber = i;
+                    break;
+                }
+            }
+            // Remove existing highlighted lines
+            const highlightedLines = document.querySelectorAll('.highlighted-line');
+            highlightedLines.forEach(line => line.classList.remove('highlighted-line'));
+            // Highlight active line
+            const activeLine = document.querySelector(`#editor-container .line-${lineNumber}`);
+            if (activeLine) {
+                activeLine.classList.add('highlighted-line');
+            }
+        }
+
+        function showSuggestions() {
+            const cursorPosition = editor.selectionStart;
+            const lastOpenTagIndex = editor.value.lastIndexOf('<', cursorPosition);
+            const lastCloseTagIndex = editor.value.lastIndexOf('>', cursorPosition);
+            const lastTagIndex = Math.max(lastOpenTagIndex, lastCloseTagIndex);
+            const searchText = editor.value.slice(lastTagIndex + 1, cursorPosition);
+            const suggestionsList = htmlTags.filter(tag => tag.startsWith(searchText)).slice(0, 5);
+            if (suggestionsList.length > 0) {
+                const suggestionsHTML = suggestionsList.map(tag => `<li>${tag}</li>`).join('');
+                suggestions.innerHTML = `<ul>${suggestionsHTML}</ul>`;
+                suggestions.style.display = 'block';
+            } else {
+                suggestions.innerHTML = '';
+                suggestions.style.display = 'none';
+            }
+        }
+
+        function autoCloseTagsDisabledRN() {
+            const cursorPosition = editor.selectionStart;
+            const lastOpenTagIndex = editor.value.lastIndexOf('<', cursorPosition - 1);
+            const lastCloseTagIndex = editor.value.lastIndexOf('>', cursorPosition - 1);
+            const lastTagIndex = Math.max(lastOpenTagIndex, lastCloseTagIndex);
+            if (editor.value[lastOpenTagIndex] === '<' && lastOpenTagIndex > lastCloseTagIndex) {
+                // Find the first word after the opening '<' until the next space or '>'
+                const nextSpaceIndex = editor.value.indexOf(' ', lastOpenTagIndex);
+                const nextClosingBracketIndex = editor.value.indexOf('>', lastOpenTagIndex);
+                const endIndex = Math.min(nextSpaceIndex !== -1 ? nextSpaceIndex : nextClosingBracketIndex,
+                    cursorPosition);
+                const tag = editor.value.substring(lastOpenTagIndex + 1, endIndex);
+                if (tag.trim() !== '') {
+                    const autoCloseTag = `</${tag}>`;
+                    // Check if there's already a closing tag present
+                    const nextCloseTagIndex = editor.value.indexOf(autoCloseTag, cursorPosition);
+                    if (nextCloseTagIndex === -1) {
+                        const newText =
+                            `${editor.value.substring(0, cursorPosition)}${autoCloseTag}${editor.value.substring(cursorPosition)}`;
+                        editor.value = newText;
+                        editor.selectionStart = editor.selectionEnd = cursorPosition;
+                    }
+                }
+            }
+        }
+
+        function runCode() {
+            const code = editor.value;
+            output.innerHTML = code;
+        }
+
+        function saveCode() {
+            const code = editor.value;
+            const timestamp = new Date().toLocaleString();
+            const saveSlot = {
+                timestamp,
+                code
+            };
+            if (saveSlots.length < 5) {
+                saveSlots.push(saveSlot);
+            } else {
+                saveSlots.shift();
+                saveSlots.push(saveSlot);
+            }
+            saveToIndexedDB();
+            updateSaveMenu();
+        }
+
+        function saveToIndexedDB() {
+            const request = indexedDB.open('HTMLSaveDB', 1);
+            request.onupgradeneeded = function(event) {
+                const db = event.target.result;
+                const objectStore = db.createObjectStore('saves', {
+                    keyPath: 'id',
+                    autoIncrement: true
+                });
+                objectStore.createIndex('timestamp', 'timestamp');
+                objectStore.createIndex('code', 'code');
+            };
+            request.onsuccess = function(event) {
+                const db = event.target.result;
+                const transaction = db.transaction('saves', 'readwrite');
+                const objectStore = transaction.objectStore('saves');
+                saveSlots.forEach(save => {
+                    objectStore.add(save);
+                });
+                transaction.oncomplete = function() {
+                    db.close();
+                };
+            };
+            request.onerror = function(event) {
+                console.error('IndexedDB error:', event.target.error);
+            };
+        }
+        let saveMenu;
+        // Add event listener to the Save button for showing/hiding the save menu
+        saveBtn.addEventListener('mouseenter', showSaveMenu);
+        saveBtn.addEventListener('mouseleave', hideSaveMenu);
+        // Add event listener to document body for hiding the save menu when clicked outside
+        document.body.addEventListener('click', hideSaveMenu);
+
+        function showSaveMenu() {
+            // Create or update the save menu
+            updateSaveMenu();
+            // Show the save menu
+            saveMenu.style.transition = "opacity 5s ease-in-out";
+            saveMenu.style.opacity = "1";
+        }
+
+        function hideSaveMenu() {
+            // Hide the save menu
+            if (saveMenu) {
+                saveMenu.style.transition = "opacity 5s ease-in-out";
+                saveMenu.style.opacity = "0";
+            }
+        }
+
+        function updateSaveMenu() {
+            // Remove existing save menu if it exists
+            if (saveMenu) {
+                saveMenu.style.opacity = 0; // Set opacity to 0 when not active
+                saveMenu.remove();
+            }
+            // Create a new save menu
+            saveMenu = document.createElement('div');
+            saveMenu.id = 'save-menu';
+            saveMenu.style.position = 'absolute';
+            saveMenu.style.top = '40px';
+            saveMenu.style.right = '10px';
+            saveMenu.style.zIndex = '1';
+            saveMenu.style.backgroundColor = '#fff';
+            saveMenu.style.boxShadow = '0px 2px 4px rgba(0, 0, 0, 0.1)';
+            saveMenu.style.border = '1px solid #ccc';
+            saveMenu.style.borderRadius = '5px';
+            saveMenu.style.maxHeight = '150px';
+            saveMenu.style.overflowY = 'auto';
+            saveMenu.style.opacity = 1; // Set opacity to 1 when active
+            // Add save items to the menu
+            saveSlots.forEach((save, index) => {
+                const slotItem = document.createElement('div');
+                slotItem.textContent = `${index + 1}. ${save.timestamp}`;
+                slotItem.style.padding = '5px 10px';
+                slotItem.style.cursor = 'pointer'; // Add cursor pointer for clickable behavior
+                slotItem.addEventListener('click', () => loadSavedCode(
+                index)); // Add click event to load the saved code
+                saveMenu.appendChild(slotItem);
+            });
+            // Add the save menu to the body
+            document.body.appendChild(saveMenu);
+        }
+
+        function loadSavedCode(index) {
+            // Load the saved code corresponding to the index
+            if (index >= 0 && index < saveSlots.length) {
+                const savedCode = saveSlots[index].code;
+                editor.value = savedCode;
+                alert('Opening Save');
+            }
+        }
+
+        function saveCode() {
+            // Check if the maximum save limit is reached
+            if (saveSlots.length >= 10) {
+                // Alert to buy premium
+                alert('Buy Brungle Premium to save more!');
+                return;
+            }
+            const code = editor.value;
+            const timestamp = new Date().toLocaleString();
+            const saveSlot = {
+                timestamp,
+                code
+            };
+            if (saveSlots.length < 10) {
+                saveSlots.push(saveSlot);
+            } else {
+                saveSlots.shift();
+                saveSlots.push(saveSlot);
+            }
+            saveToIndexedDB();
+            updateSaveMenu();
+        }
+
+        function handleSuggestionClick(event) {
+            if (event.target.tagName === 'LI') {
+                const selectedTag = event.target.textContent;
+                const cursorPosition = editor.selectionStart;
+                const lastOpenTagIndex = editor.value.lastIndexOf('<', cursorPosition - 1);
+                const newText =
+                    `${editor.value.substring(0, lastOpenTagIndex)}${selectedTag}>${editor.value.substring(cursorPosition)}`;
+                editor.value = newText;
+                editor.focus();
+                editor.selectionStart = editor.selectionEnd = lastOpenTagIndex + selectedTag.length + 1;
+            }
+        }
+
+        function hideSuggestions(event) {
+            if (!event.target.closest('#suggestions') && event.target !== editor) {
+                suggestions.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>

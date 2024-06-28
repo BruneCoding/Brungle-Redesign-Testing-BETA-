@@ -1,0 +1,112 @@
+<html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maps UI</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="search-overlay" class="glass">
+        <input type="text" id="search-input" placeholder="Search for a place...">
+        <button id="search-button">Search</button>
+    </div>
+    <script src="https://www.bing.com/api/maps/mapcontrol?key=YOUR_MAPS_API_KEY&callback=initMap" async defer></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
+
+</html>
+<style>
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+
+    #map {
+        height: 100%;
+    }
+
+    #search-overlay {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    #search-input {
+        width: 200px;
+        padding: 5px;
+        margin-right: 5px;
+    }
+
+    #search-button {
+        padding: 5px 10px;
+        background-color: rgba(0, 120, 212, 0.5);
+        color: white;
+        border: none;
+        backdrop-filter: blur(5px);
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #search-button:hover {
+        box-shadow: 0 0 rgb(0, 120, 212) white;
+    }
+
+    .glass {
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .glass input {
+        background: transparent;
+        border: none;
+        color: black;
+        outline: none;
+    }
+</style>
+<script>
+    // Initialize the map
+    let map;
+
+    function initMap() {
+        map = new Microsoft.Maps.Map('#map', {
+            credentials: 'AjalGLk6Tp71rrTBwocN4BF0G8ATp_eUcLOgHxuW13JScvJXMLoOn7193gjfMU0D'
+        });
+        // Search functionality
+        document.getElementById('search-button').addEventListener('click', function() {
+            let query = document.getElementById('search-input').value;
+            Microsoft.Maps.loadModule('Microsoft.Maps.Search', function() {
+                let searchManager = new Microsoft.Maps.Search.SearchManager(map);
+                searchManager.geocode({
+                    where: query,
+                    callback: function(geocodeResult) {
+                        if (geocodeResult && geocodeResult.results && geocodeResult.results
+                            .length > 0) {
+                            let topResult = geocodeResult.results[0];
+                            map.setView({
+                                bounds: topResult.bestView
+                            });
+                        }
+                    },
+                    errorCallback: function() {
+                        alert('No results found.');
+                    }
+                });
+            });
+        });
+    }
+</script>
