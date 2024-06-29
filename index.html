@@ -463,8 +463,7 @@
   </div>
 </div>
 
-<!-- CODE HTML -->
-<div class="moreMenu" style="position: absolute; top: 5px; display: none; z-index: 15">
+<div class="moreMenu">
   <div class="moreeenu">
     <h1> Select Your <b>APP</b></h1>
     <button class="box" style="background: #814cfe; border: 5px solid #814cfe;" onclick="showThemeChanger()">
@@ -476,9 +475,9 @@
     <button onclick="showCalculator()" class="box" style="background: #673ccb; border: 5px solid #673ccb;">
       <i style="scale: 1.35" class="fa-solid fa-calculator" aria-hidden="true"></i>
     </button>
-    <div class="box" style="background: #5a35b1; border: 5px solid #5a35b1;">
-      <!--  -->
-    </div>
+    <button class="box" style="background: #5a35b1; border: 5px solid #5a35b1;" onclick="gotoNotes()">
+      <i style="scale: 1.35" class="fa-solid fa-note-sticky"></i>
+    </button>
     <div class="box" style="background: #40267f; border: 5px solid #40267f;">
       <!--  -->
     </div>
@@ -916,6 +915,10 @@ document.addEventListener("DOMContentLoaded", function () {
 // bruh
 function addNewBG() {
   alert("UNAVAILABLE. WORKING ON IT RN");
+}
+
+  function gotoNotes() {
+  window.location.href = "https://notes-brungle.pages.dev/";
 }
 
 </script>
