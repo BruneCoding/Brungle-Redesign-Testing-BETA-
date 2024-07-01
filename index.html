@@ -315,9 +315,6 @@
     };
   }
 </script>
-<html>
-<!DOCTYPE html>
-<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -438,8 +435,8 @@
     </div>
     <div class="images">
       <h1> BG Images </h1>
-      <div class="bg-circle"></div>
-      INACTIVE.
+      <div class="bg-circle" style="display: none"></div>
+      Currently No Default BG Images. Try Creating One...
       <button class="color-circle" style="background: transparent; display: flex; justify-content: center;align-items: center; color: white;" onclick="addNewBG()">+</button>
     </div>
     <div class="stuffs">
@@ -488,444 +485,556 @@
 </div>
 <style>
   button {
-  outline: none;
-  border: none;
-}
+    outline: none;
+    border: none;
+  }
 
-.moreeenu {
-  background: rgba(70,71,78,1);
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  gap: 50px;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  color: white;
-  font-family: "Helvetica", cursive;
-  z-index: 99999999999;
-  scale: 0.75;
-  border-radius: 50px;
-}
+  .moreeenu {
+    background: rgba(70, 71, 78, 1);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: white;
+    font-family: "Helvetica", cursive;
+    z-index: 99999999999;
+    scale: 0.75;
+    border-radius: 50px;
+  }
 
   .moreMenu {
     position: absolute;
     display: none;
-    background: rgba(70,71,78,0.15);
+    background: rgba(70, 71, 78, 0.15);
     z-index: top;
   }
 
-.moreMenu b {
-  font-weight: 1000;
-}
+  .moreMenu b {
+    font-weight: 1000;
+  }
 
-.moreMenu h1 {
-  position: absolute;
-  top: 150px;
-  z-index: 9;
-  font-size: 50px;
-  font-weight: 500;
-}
+  .moreMenu h1 {
+    position: absolute;
+    top: 150px;
+    z-index: 9;
+    font-size: 50px;
+    font-weight: 500;
+  }
 
-* {
-  margin: 0;
-}
+  * {
+    margin: 0;
+  }
 
-.box {
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 75px;
-  width: 75px;
-  border-radius: 10px;
-  transition: all 0.35s ease-in-out;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
-  opacity: 0.75;
-}
+  .box {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 75px;
+    width: 75px;
+    border-radius: 10px;
+    transition: all 0.35s ease-in-out;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+    opacity: 0.75;
+  }
 
-.box:hover {
-  width: 105px;
-  height: 105px;
-  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.5);
-  opacity: 1;
-}
+  .box:hover {
+    width: 105px;
+    height: 105px;
+    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.5);
+    opacity: 1;
+  }
 
-#color-dang,
-#image-dang,
-#theme-dang {
-  display: flex;
-  flex-direction: row;
-  position: relative;
-  align-items: center;
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
+  #color-dang,
+  #image-dang,
+  #theme-dang {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
 
-#color-dang h1,
-#image-dang h1,
-#theme-dang h1 {
-  position: absolute;
-}
+  #color-dang h1,
+  #image-dang h1,
+  #theme-dang h1 {
+    position: absolute;
+  }
 
-#bruh {
-  font-size: 25px;
-  text-align: center;
-  font-weight: 950;
-  text-decoration: none;
-  transition: all 0.05s ease-in-out;
-}
+  #bruh {
+    font-size: 25px;
+    text-align: center;
+    font-weight: 950;
+    text-decoration: none;
+    transition: all 0.05s ease-in-out;
+  }
 
-#bruh:hover {
-  font-size: 27.5px;
-  font-weight: 1000;
-  text-decoration: underline;
-  padding: 10px;
-  width: auto;
-  height: auto;
-  border-radius: 5px;
-}
-.customize {
-  position: absolute;
-  background: #3e404d;
-  width: 70%;
-  height: 80%;
-  z-index: 10;
-  top: 10vh;
-  left: 10vw;
-  padding: 15px;
-  border-radius: 25px;
-  display: flex;
-  color: white;
-  gap: 10px;
-  font-family: "Helvetica", cursive;
-  flex-direction: column;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  z-index: 999999999999999999999999;
-  display: none;
-}
+  #bruh:hover {
+    font-size: 27.5px;
+    font-weight: 1000;
+    text-decoration: underline;
+    padding: 10px;
+    width: auto;
+    height: auto;
+    border-radius: 5px;
+  }
 
-.closeIT {
-  height: 50px;
-  width: 50px;
-  background: red;
-  opacity: 0.86;
-  color: white;
-  font-weight: 1000;
-  border-radius: 15px;
-  z-index: 999999999;
-  position: absolute;
-  top: 15px;
-  right: 15px;
-}
+  .customize {
+    position: absolute;
+    background: #3e404d;
+    width: 70%;
+    height: 80%;
+    z-index: 10;
+    top: 10vh;
+    left: 10vw;
+    padding: 15px;
+    border-radius: 25px;
+    display: flex;
+    color: white;
+    gap: 10px;
+    font-family: "Helvetica", cursive;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    z-index: 999999999999999999999999;
+    display: none;
+  }
 
-.content-customize {
-  margin-bottom: 15px;
-  position: relative;
-}
+  .closeIT {
+    height: 50px;
+    width: 50px;
+    background: red;
+    opacity: 0.86;
+    color: white;
+    font-weight: 1000;
+    border-radius: 15px;
+    z-index: 999999999;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
 
-.themes,
-.images,
-.colors,
-.stuffs {
-  background: #3e8eff;
-  padding: 5px;
-  border-radius: 10px;
-  align-items: center;
-  width: calc(100% - 10px);
-  min-height: 20%;
-  height: auto;
-  margin-right: 10px;
-  margin-bottom: 5px;
-  transition: all 0.075s ease-in-out;
-}
+  .content-customize {
+    margin-bottom: 15px;
+    position: relative;
+  }
 
-.stuffs hr {
-  opacity: 0.35;
-  width: calc(100% + 7.5px);
-  margin-left: -5px;
-  border: 2px solid white;
-  border-radius: 5px;
-}
+  .themes,
+  .images,
+  .colors,
+  .stuffs {
+    background: #3e8eff;
+    padding: 5px;
+    border-radius: 10px;
+    align-items: center;
+    width: calc(100% - 10px);
+    min-height: 20%;
+    height: auto;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    transition: all 0.075s ease-in-out;
+  }
 
-.themes:hover,
-.images:hover,
-.colors:hover,
-.stuffs:hover {
-  background: #7f37e5;
-  transform: scale(1.005) translateX(-0.35vw);
-  border: 2px dashed white;
-}
+  .stuffs hr {
+    opacity: 0.35;
+    width: calc(100% + 7.5px);
+    margin-left: -5px;
+    border: 2px solid white;
+    border-radius: 5px;
+  }
 
-.themes h1,
-.images h1,
-.colors h1,
-.stuffs h1 {
-  font-size: 25px;
-  margin-left: 15px;
-}
+  .themes:hover,
+  .images:hover,
+  .colors:hover,
+  .stuffs:hover {
+    background: #7f37e5;
+    transform: scale(1.005) translateX(-0.35vw);
+    border: 2px dashed white;
+  }
 
-.stuffs h2 {
-  font-size: 15px;
-  margin-left: 15px;
-}
+  .themes h1,
+  .images h1,
+  .colors h1,
+  .stuffs h1 {
+    font-size: 25px;
+    margin-left: 15px;
+  }
 
-.theme-circle,
-.color-circle,
-.bg-circle,
-.custom-theme,
-.custom-color,
-.custom-image {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: black;
-  margin: 5px;
-  margin-left: 15px;
-  margin-bottom: 10px;
-}
+  .stuffs h2 {
+    font-size: 15px;
+    margin-left: 15px;
+  }
 
-.theme-circle:hover,
-.color-circle:hover,
-.bg-circle:hover,
-.custom-theme:hover,
-.custom-color:hover,
-.custom-image:hover {
-  border: 2px dashed white;
-}
+  .theme-circle,
+  .color-circle,
+  .bg-circle,
+  .custom-theme,
+  .custom-color,
+  .custom-image {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: black;
+    margin: 5px;
+    margin-left: 15px;
+    margin-bottom: 10px;
+  }
 
-.smolPopup {
-  background: purple;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px 20px;
-  text-align: center;
-  font-size: 10px;
-  position: absolute;
-  display: block;
-  position: absolute;
-  z-index: 11;
-  border-radius: 5px;
-  right: 0;
-  top: 0;
-  margin-top: 35px;
-  margin-right: 50px;
-  display: none;
-}
+  .theme-circle:hover,
+  .color-circle:hover,
+  .bg-circle:hover,
+  .custom-theme:hover,
+  .custom-color:hover,
+  .custom-image:hover {
+    border: 2px dashed white;
+  }
 
+  .smolPopup {
+    background: purple;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 20px;
+    text-align: center;
+    font-size: 10px;
+    position: absolute;
+    display: block;
+    position: absolute;
+    z-index: 11;
+    border-radius: 5px;
+    right: 0;
+    top: 0;
+    margin-top: 35px;
+    margin-right: 50px;
+    display: none;
+  }
 </style>
 <script>
   function showThemeChanger() {
-  var bruh = document.querySelector(".customize");
-  var theme = document.querySelector("#themeButton");
-
-  var hurb = document.querySelector(".moreMenu");
-
-  if (bruh.style.display === "block") {
-    bruh.style.display = "none";
-    theme.style.background = "#3e404d";
-    theme.style.border = "none";
-  } else {
-    bruh.style.display = "block";
-    theme.style.background = "#515157";
-    theme.style.border = "2px dashed white";
-    if (hurb.style.display === "block") {
-      toggleMore();
+    var bruh = document.querySelector(".customize");
+    var theme = document.querySelector("#themeButton");
+    var hurb = document.querySelector(".moreMenu");
+    if (bruh.style.display === "block") {
+      bruh.style.display = "none";
+      theme.style.background = "#3e404d";
+      theme.style.border = "none";
+    } else {
+      bruh.style.display = "block";
+      theme.style.background = "#515157";
+      theme.style.border = "2px dashed white";
+      if (hurb.style.display === "block") {
+        toggleMore();
+      }
     }
   }
-}
 
-function toggleMore() {
-  var bruh = document.querySelector(".moreMenu");
-  var more = document.querySelector("#moreButton");
-
-  var hurb = document.querySelector(".customize");
-
-  if (bruh.style.display === "block") {
-    bruh.style.display = "none";
-    more.style.background = "#3e404d";
-    more.style.border = "none";
-  } else {
-    bruh.style.display = "block";
-    more.style.background = "#515157";
-    more.style.border = "2px dashed white";
-    if (hurb.style.display === "block") {
-      showThemeChanger();
+  function toggleMore() {
+    var bruh = document.querySelector(".moreMenu");
+    var more = document.querySelector("#moreButton");
+    var hurb = document.querySelector(".customize");
+    if (bruh.style.display === "block") {
+      bruh.style.display = "none";
+      more.style.background = "#3e404d";
+      more.style.border = "none";
+    } else {
+      bruh.style.display = "block";
+      more.style.background = "#515157";
+      more.style.border = "2px dashed white";
+      if (hurb.style.display === "block") {
+        showThemeChanger();
+      }
     }
   }
-}
 
-function closeIT() {
-  alert("broken lol");
-}
-let db;
-const request = indexedDB.open("ColorDB", 1);
-request.onupgradeneeded = function (event) {
-  db = event.target.result;
-  db.createObjectStore("colors", {
-    keyPath: "id",
-    autoIncrement: true
-  });
-};
-request.onsuccess = function (event) {
-  db = event.target.result;
-  loadColors();
-};
-request.onerror = function (event) {
-  console.error("Database error: " + event.target.errorCode);
-};
-
-function addNewColor() {
-  const color = prompt("Enter a color in hex (e.g., #ff0000):");
-  if (color) {
-    const transaction = db.transaction(["colors"], "readwrite");
-    const store = transaction.objectStore("colors");
-    store.add({
-      color: color
+  function closeIT() {
+    alert("broken lol");
+  }
+  let db;
+  const request = indexedDB.open("ColorDB", 1);
+  request.onupgradeneeded = function(event) {
+    db = event.target.result;
+    db.createObjectStore("colors", {
+      keyPath: "id",
+      autoIncrement: true
     });
-    transaction.oncomplete = function () {
-      createColorDiv(color);
+  };
+  request.onsuccess = function(event) {
+    db = event.target.result;
+    loadColors();
+  };
+  request.onerror = function(event) {
+    console.error("Database error: " + event.target.errorCode);
+  };
+
+  function addNewColor() {
+    const color = prompt("Enter a color in hex (e.g., #ff0000):");
+    if (color) {
+      const transaction = db.transaction(["colors"], "readwrite");
+      const store = transaction.objectStore("colors");
+      store.add({
+        color: color
+      });
+      transaction.oncomplete = function() {
+        createColorDiv(color);
+      };
+      transaction.onerror = function(event) {
+        console.error("Transaction error: " + event.target.errorCode);
+      };
+    }
+  }
+
+  function loadColors() {
+    const transaction = db.transaction(["colors"], "readonly");
+    const store = transaction.objectStore("colors");
+    const request = store.getAll();
+    request.onsuccess = function(event) {
+      const colors = event.target.result;
+      colors.forEach((colorObj) => createColorDiv(colorObj.color));
     };
-    transaction.onerror = function (event) {
+    request.onerror = function(event) {
       console.error("Transaction error: " + event.target.errorCode);
     };
   }
-}
 
-function loadColors() {
-  const transaction = db.transaction(["colors"], "readonly");
-  const store = transaction.objectStore("colors");
-  const request = store.getAll();
-  request.onsuccess = function (event) {
-    const colors = event.target.result;
-    colors.forEach((colorObj) => createColorDiv(colorObj.color));
-  };
-  request.onerror = function (event) {
-    console.error("Transaction error: " + event.target.errorCode);
-  };
-}
-
-function createColorDiv(color) {
-  const div = document.createElement("div");
-  div.className = "color-circle";
-  div.style.backgroundColor = color;
-  div.onclick = function () {
-    document.body.style.backgroundColor = color;
-  };
-  document.getElementById("color-dang").appendChild(div);
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-  // Open (or create) the database
-  let db;
-  const request = indexedDB.open("backgroundDB", 1);
-
-  request.onerror = function (event) {
-    console.log("Database error:", event.target.error);
-  };
-
-  request.onsuccess = function (event) {
-    db = event.target.result;
-    getBackgroundColor();
-  };
-
-  request.onupgradeneeded = function (event) {
-    db = event.target.result;
-    db.createObjectStore("settings", { keyPath: "id" });
-  };
-
-  function saveBackgroundColor(color) {
-    const transaction = db.transaction(["settings"], "readwrite");
-    const store = transaction.objectStore("settings");
-    store.put({ id: "backgroundColor", color: color });
+  function createColorDiv(color) {
+    const div = document.createElement("div");
+    div.className = "color-circle";
+    div.style.backgroundColor = color;
+    div.onclick = function() {
+      document.body.style.backgroundColor = color;
+    };
+    document.getElementById("color-dang").appendChild(div);
   }
+  document.addEventListener("DOMContentLoaded", function() {
+    // Open (or create) the database
+    let db;
+    const request = indexedDB.open("backgroundDB", 1);
+    request.onerror = function(event) {
+      console.log("Database error:", event.target.error);
+    };
+    request.onsuccess = function(event) {
+      db = event.target.result;
+      getBackgroundColor();
+    };
+    request.onupgradeneeded = function(event) {
+      db = event.target.result;
+      db.createObjectStore("settings", {
+        keyPath: "id"
+      });
+    };
 
-  function getBackgroundColor() {
-    const transaction = db.transaction(["settings"], "readonly");
-    const store = transaction.objectStore("settings");
-    const request = store.get("backgroundColor");
+    function saveBackgroundColor(color) {
+      const transaction = db.transaction(["settings"], "readwrite");
+      const store = transaction.objectStore("settings");
+      store.put({
+        id: "backgroundColor",
+        color: color
+      });
+    }
 
-    request.onsuccess = function (event) {
+    function getBackgroundColor() {
+      const transaction = db.transaction(["settings"], "readonly");
+      const store = transaction.objectStore("settings");
+      const request = store.get("backgroundColor");
+      request.onsuccess = function(event) {
+        if (event.target.result) {
+          document.body.style.backgroundColor = event.target.result.color;
+        }
+      };
+      request.onerror = function(event) {
+        console.log("Error fetching background color:", event.target.error);
+      };
+    }
+    document.getElementById("color-navy").addEventListener("click", function() {
+      const navyColor = "#000042";
+      document.body.style.backgroundImage = "";
+      document.body.style.backgroundColor = navyColor;
+      saveBackgroundColor(navyColor);
+    });
+    document
+      .getElementById("color-normal")
+      .addEventListener("click", function() {
+        const normalColor = "#282a37";
+        document.body.style.backgroundImage = "";
+        document.body.style.backgroundColor = normalColor;
+        saveBackgroundColor(normalColor);
+      });
+    document.getElementById("color-green").addEventListener("click", function() {
+      const greenColor = "#036B52";
+      document.body.style.backgroundImage = "";
+      document.body.style.backgroundColor = greenColor;
+      saveBackgroundColor(greenColor);
+    });
+    document.getElementById("color-og").addEventListener("click", function() {
+      const ogColor = "#E63946";
+      document.body.style.backgroundImage = "";
+      document.body.style.backgroundColor = ogColor;
+      saveBackgroundColor(ogColor);
+    });
+    //smol popup thingy name
+    document
+      .getElementById("color-navy")
+      .addEventListener("mouseover", function() {
+        document.getElementById("smolColors").innerHTML = "Navy Oliver";
+        document.getElementById("smolPopup").style.display = "block";
+      });
+    document
+      .getElementById("color-normal")
+      .addEventListener("mouseover", function() {
+        document.getElementById("smolColors").innerHTML = "Dark";
+        document.getElementById("colours").style.display = "block";
+      });
+    document
+      .getElementById("color-green")
+      .addEventListener("mouseover", function() {
+        document.getElementById("smolColors").innerHTML = "Direct Green";
+        document.getElementById("colours").style.display = "block";
+      });
+    document
+      .getElementById("color-og")
+      .addEventListener("mouseover", function() {
+        document.getElementById("smolColors").innerHTML = "OG";
+        document.getElementById("smolPopup").style.display = "block";
+      });
+  });
+  // bruh
+  document.addEventListener("DOMContentLoaded", () => {
+    // Initialize IndexedDB
+    const request = indexedDB.open("bgImageDB", 1);
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+      db.createObjectStore("images", {
+        keyPath: "id"
+      });
+      db.createObjectStore("circles", {
+        keyPath: "id",
+        autoIncrement: true
+      });
+    };
+    request.onsuccess = (event) => {
+      const db = event.target.result;
+      loadSavedData(db);
+    };
+    request.onerror = (event) => {
+      console.error("Database error:", event.target.errorCode);
+    };
+  });
+
+  function loadSavedData(db) {
+    // Load and set background image
+    const transaction = db.transaction(["images"], "readonly");
+    const store = transaction.objectStore("images");
+    const getRequest = store.get("bgImage");
+    getRequest.onsuccess = (event) => {
       if (event.target.result) {
-        document.body.style.backgroundColor = event.target.result.color;
+        document.body.style.backgroundImage = `url(${event.target.result.url})`;
       }
     };
-
-    request.onerror = function (event) {
-      console.log("Error fetching background color:", event.target.error);
+    // Load and create saved circles
+    const circleTransaction = db.transaction(["circles"], "readonly");
+    const circleStore = circleTransaction.objectStore("circles");
+    circleStore.openCursor().onsuccess = (event) => {
+      const cursor = event.target.result;
+      if (cursor) {
+        addColorCircle(cursor.value.url, false);
+        cursor.continue();
+      }
     };
   }
 
-  document.getElementById("color-navy").addEventListener("click", function () {
-    const navyColor = "#000042";
-    document.body.style.backgroundImage = "";
-    document.body.style.backgroundColor = navyColor;
-    saveBackgroundColor(navyColor);
-  });
+  function addNewBG() {
+    const imageUrl = prompt("Please enter the image URL:");
+    if (imageUrl) {
+      document.body.style.backgroundImage = `url(${imageUrl})`;
+      // Save the image URL to IndexedDB
+      const request = indexedDB.open("bgImageDB", 1);
+      request.onsuccess = (event) => {
+        const db = event.target.result;
+        const transaction = db.transaction(["images"], "readwrite");
+        const store = transaction.objectStore("images");
+        const bgImage = {
+          id: "bgImage",
+          url: imageUrl
+        };
+        store.put(bgImage);
+        transaction.oncomplete = () => {
+          console.log("Background image saved to IndexedDB.");
+          addColorCircle(imageUrl, true);
+        };
+        transaction.onerror = (event) => {
+          console.error("Transaction error:", event.target.errorCode);
+        };
+      };
+      request.onerror = (event) => {
+        console.error("Database error:", event.target.errorCode);
+      };
+    } else {
+      console.log("No image URL provided.");
+    }
+  }
 
-  document
-    .getElementById("color-normal")
-    .addEventListener("click", function () {
-      const normalColor = "#282a37";
-      document.body.style.backgroundImage = "";
-      document.body.style.backgroundColor = normalColor;
-      saveBackgroundColor(normalColor);
+  function addColorCircle(imageUrl, saveToDB) {
+    const parentDiv = document.getElementById('image-dang');
+    const newDiv = document.createElement('div');
+    newDiv.className = 'color-circle';
+    newDiv.style.backgroundImage = `url(${imageUrl})`;
+    newDiv.addEventListener('click', () => {
+      document.body.style.backgroundImage = `url(${imageUrl})`;
+      saveBackgroundImage(imageUrl);
     });
+    parentDiv.appendChild(newDiv);
+    if (saveToDB) {
+      // Save the circle's image URL to IndexedDB
+      const request = indexedDB.open("bgImageDB", 1);
+      request.onsuccess = (event) => {
+        const db = event.target.result;
+        const transaction = db.transaction(["circles"], "readwrite");
+        const store = transaction.objectStore("circles");
+        const circle = {
+          url: imageUrl
+        };
+        store.add(circle);
+        transaction.oncomplete = () => {
+          console.log("Circle image saved to IndexedDB.");
+        };
+        transaction.onerror = (event) => {
+          console.error("Transaction error:", event.target.errorCode);
+        };
+      };
+      request.onerror = (event) => {
+        console.error("Database error:", event.target.errorCode);
+      };
+    }
+  }
 
-  document.getElementById("color-green").addEventListener("click", function () {
-    const greenColor = "#036B52";
-    document.body.style.backgroundImage = "";
-    document.body.style.backgroundColor = greenColor;
-    saveBackgroundColor(greenColor);
-  });
-
-  document.getElementById("color-og").addEventListener("click", function () {
-    const ogColor = "#E63946";
-    document.body.style.backgroundImage = "";
-    document.body.style.backgroundColor = ogColor;
-    saveBackgroundColor(ogColor);
-  });
-
-  //smol popup thingy name
-
-  document
-    .getElementById("color-navy")
-    .addEventListener("mouseover", function () {
-      document.getElementById("smolColors").innerHTML = "Navy Oliver";
-      document.getElementById("smolPopup").style.display = "block";
-    });
-
-  document
-    .getElementById("color-normal")
-    .addEventListener("mouseover", function () {
-      document.getElementById("smolColors").innerHTML = "Dark";
-      document.getElementById("colours").style.display = "block";
-    });
-
-  document
-    .getElementById("color-green")
-    .addEventListener("mouseover", function () {
-      document.getElementById("smolColors").innerHTML = "Direct Green";
-      document.getElementById("colours").style.display = "block";
-    });
-
-  document
-    .getElementById("color-og")
-    .addEventListener("mouseover", function () {
-      document.getElementById("smolColors").innerHTML = "OG";
-      document.getElementById("smolPopup").style.display = "block";
-    });
-});
-
-// bruh
-function addNewBG() {
-  alert("UNAVAILABLE. WORKING ON IT RN");
-}
+  function saveBackgroundImage(imageUrl) {
+    const request = indexedDB.open("bgImageDB", 1);
+    request.onsuccess = (event) => {
+      const db = event.target.result;
+      const transaction = db.transaction(["images"], "readwrite");
+      const store = transaction.objectStore("images");
+      const bgImage = {
+        id: "bgImage",
+        url: imageUrl
+      };
+      store.put(bgImage);
+      transaction.oncomplete = () => {
+        console.log("Background image saved to IndexedDB.");
+      };
+      transaction.onerror = (event) => {
+        console.error("Transaction error:", event.target.errorCode);
+      };
+    };
+    request.onerror = (event) => {
+      console.error("Database error:", event.target.errorCode);
+    };
+  }
 
   function gotoNotes() {
-  window.location.href = "https://notes-brungle.pages.dev/";
-}
-
+    window.location.href = "https://notes-brungle.pages.dev/";
+  }
 </script>
